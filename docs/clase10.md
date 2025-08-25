@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 env:
-  IMAGE_BASE_NAME: aminespinoza/apicontactos
+  IMAGE_BASE_NAME: davegaitan/apicontactos
 
 jobs:
   API_Image:

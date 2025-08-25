@@ -23,7 +23,7 @@ on:
     branches: [ "main" ]
 
 env:
-  IMAGE_BASE_NAME: aminespinoza/apicontactos:latest
+  IMAGE_BASE_NAME: davegaitan/apicontactos:latest
   RESOURCE_GROUP: rg--warm-wren
   ENVIRONMENT_NAME: devops-env
 
