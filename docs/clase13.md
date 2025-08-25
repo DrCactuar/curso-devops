@@ -1,5 +1,4 @@
 # Material para la clase 13
-
 Comienza por crear un Service Principal en Azure:
 
 ```bash

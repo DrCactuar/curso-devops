@@ -13,7 +13,7 @@ variable "resource_group_location" {
 variable "acr_name" {
   description = "Name of the Azure Container Registry"
   type        = string
-  default     = "acrdevopsamin"
+  default     = "acrdevopsdave"
 }
 
 variable "container_app_env_name" {
