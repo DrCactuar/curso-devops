@@ -12,8 +12,3 @@ provider "azurerm" {
   }
   subscription_id = "4df02a28-cf9e-4528-8c6d-26e90a0cbf2e"
 }
-
-resource "azurerm_resource_group" "rg" {
-  location = var.location
-  name     = "miPrimerResourceGroup"
-}
