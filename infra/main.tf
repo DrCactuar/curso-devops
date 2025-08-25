@@ -22,6 +22,9 @@ resource "azurerm_log_analytics_workspace" "log_analytics" {
   sku                 = "PerGB2018"
   retention_in_days   = 30
 
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 resource "azurerm_container_app_environment" "apps_environment" {
