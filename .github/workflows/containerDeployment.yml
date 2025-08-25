@@ -44,20 +44,4 @@ jobs:
           
       - name: Deploy Container App
         run: |
-          # Verifica si la app ya existe
-          if az containerapp show --name contactosapi --resource-group $RESOURCE_GROUP >/dev/null 2>&1; then
-            echo "Updating Container App..."
-            az containerapp update \
-              --name contactosapi \
-              --resource-group $RESOURCE_GROUP \
-              --image $IMAGE_BASE_NAME
-          else
-            echo "Creating Container App..."
-            az containerapp create \
-              --name contactosapi \
-              --resource-group $RESOURCE_GROUP \
-              --environment $ENVIRONMENT_NAME \
-              --image $IMAGE_BASE_NAME \
-              --ingress external \
-              --target-port 8080
-          fi
+          az containerapp up --name contactosapi --image $IMAGE_BASE_NAME --resource-group $RESOURCE_GROUP --environment $ENVIRONMENT_NAME --ingress external --target-port 8080
