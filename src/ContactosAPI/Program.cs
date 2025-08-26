@@ -5,41 +5,30 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var azureMonitorConnectionString = builder.Configuration["AzureMonitor:ConnectionString"] 
-    ?? Environment.GetEnvironmentVariable("AZURE_MONITOR_CONNECTION_STRING");
-
-var openTelemetryBuilder = builder.Services.AddOpenTelemetry()
+builder.Services.AddOpenTelemetry()
     .WithMetrics(metricsBuilder =>
     {
         metricsBuilder
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ApiContactos"))
             .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation();
-
-        // Solo agregar Azure Monitor si hay conexión definida
-        if (!string.IsNullOrWhiteSpace(azureMonitorConnectionString))
-        {
-            metricsBuilder.AddAzureMonitorMetricExporter(o =>
+            .AddHttpClientInstrumentation()
+            .AddAzureMonitorMetricExporter(o =>
             {
-                o.ConnectionString = azureMonitorConnectionString;
+                o.ConnectionString = builder.Configuration["AzureMonitor:ConnectionString"] 
+                     ?? Environment.GetEnvironmentVariable("AZURE_MONITOR_CONNECTION_STRING");
             });
-        }
     })
     .WithTracing(tracingBuilder =>
     {
         tracingBuilder
             .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("ApiContactos"))
             .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation();
-
-        // Solo agregar Azure Monitor si hay conexión definida
-        if (!string.IsNullOrWhiteSpace(azureMonitorConnectionString))
-        {
-            tracingBuilder.AddAzureMonitorTraceExporter(o =>
+            .AddHttpClientInstrumentation()
+            .AddAzureMonitorTraceExporter(o =>
             {
-                o.ConnectionString = azureMonitorConnectionString;
+                o.ConnectionString = builder.Configuration["AzureMonitor:ConnectionString"] 
+                     ?? Environment.GetEnvironmentVariable("AZURE_MONITOR_CONNECTION_STRING");
             });
-        }
     });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -57,7 +46,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
+    var forecast =  Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -77,6 +66,8 @@ app.MapGet("/obtenercontactos", () =>
 })
 .WithName("ObtenerContactos")
 .WithOpenApi();
+
+app.Run();
 
 app.Run();
 
